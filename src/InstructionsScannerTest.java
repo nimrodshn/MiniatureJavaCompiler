@@ -1,4 +1,9 @@
 import static org.junit.Assert.*;
+
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.Test;
 
 
@@ -8,24 +13,35 @@ public class InstructionsScannerTest {
 	public void testScanner() {
 		// Test 1
 		String str1 = "i = 0\nj = ++i\nx = i++ + 5\ny = 5 + 3 * 10\ni += y\n";
-		String[] ans1 = {"i = 0", "j = ++i", "x = i++ + 5", "y = 5 + 3 * 10", "i += y"};
-		String[] arr1 = scanner.scan(str1);
-		assertArrayEquals(arr1,ans1);
+		String[][] expected1 = {
+				{"i","=","0"},
+				{"i","=","i","+","1"},
+				{"j","=","i"},
+				{"x","=","i","+","5"},
+				{"i","=","i","+", "1"},
+				{"y","=","5","+","3", "*", "10"},
+				{"i","=","i","+","y"}
+		};
+		ArrayList<TokenStream> scanned1 = scanner.scan(str1);
+		for (int i=0;i<scanned1.size();i++){
+			String[] got = scanned1.get(i).tokenStreamToStringArray();
+			String[] ex = expected1[i];
+			assertArrayEquals(got,ex);
+		}
+		
 		// Test 2
 		String str2 = "i = 1\nj += i\nx = j + 7\n";
-		String[] ans2 = {"i = 1", "j += i", "x = j + 7"};
-		String[] arr2 = scanner.scan(str2);
-		assertArrayEquals(arr2,ans2);
-		// Test 3
-		String str3 = "";
-		String[] ans3 = {""};
-		String[] arr3 = scanner.scan(str3);
-		assertArrayEquals(arr3,ans3);
-		// Test 4
-		String str4 = "shimi = 3\nx = shimi++\n";
-		String[] ans4 = {"shimi = 3", "x = shimi++"};
-		String[] arr4 = scanner.scan(str4);
-		assertArrayEquals(arr4,ans4);
+		String[][] expected2 = {
+				{"i","=","1"}, 
+				{"j","=","j","+","i"}, 
+				{"x" ,"=","j","+","7"}
+		};
+		ArrayList<TokenStream> scanned2 = scanner.scan(str2);
+		for (int i=0;i<scanned2.size();i++){
+			String[] got = scanned2.get(i).tokenStreamToStringArray();
+			String[] ex = expected2[i];
+			assertArrayEquals(got,ex);
+		}
 	}
 
 }
