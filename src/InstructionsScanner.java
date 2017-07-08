@@ -10,7 +10,7 @@ public class InstructionsScanner implements Scanner {
 	}
 	
 	/*
-	 * Description: This method recievs a series of instructions in the form of one "raw string" and outputs
+	 * Description: This method receives a series of instructions in the form of one "raw string" and outputs
 	 * an array containing the the above instructions broken into streams of tokens.
 	 * @Param: String a set of instructions.
 	 */
@@ -39,11 +39,12 @@ public class InstructionsScanner implements Scanner {
 	}
 	
 	/*
-	 * Description: Catch syntactic sugar in the Token stream (i.e. "+=", "++" etc.) and fix the token stream accordingly.
+	 * Description: Catch syntactic sugar in the Token stream (i.e. "+=", "++" etc.) and fix the token stream according to java semantic.
 	 * Example - Token stream is "i", "+=" "5"; stream will be transformed to "i", "=", "i" "+" "5".
 	 * @Param: an array of tokens.
 	 */
 	private void catchAndReplaceSyntacticSuger(TokenStream stream,int idx){
+		int counter = idx;
 		ArrayList<Token> rawStream = stream.getStream();
 		ArrayList<Token> modifiedStream = new ArrayList<Token>();
 		for (int i=0;i<rawStream.size();i++){
@@ -56,8 +57,8 @@ public class InstructionsScanner implements Scanner {
 				rawStream.add(i+2, new Token("+"));
 			} else if (tokenString.contains("++")){
 				// There are two cases: either a token of the form someVar++ or ++someVar.
-				// In the first case (post-increment) we change the value of the token to be someVar and append the line "someVar = someVar + 1" after the represented by stream in the instructionSet.
-				// In the second case (pre-increment) we change the value of the token to be someVar and append the line "someVar = someVar + 1" before the line represented by stream in the instructionSet.
+				// In the first case (post-increment) we change the value of the token to be 'someVar' and append the line "someVar = someVar + 1" after the line represented by this token stream in the instructionSet.
+				// In the second case (pre-increment) we change the value of the token to be someVar and append the line "someVar = someVar + 1" before the line represented by this token stream in the instructionSet.
 				int indexOfInc = tokenString.indexOf("++");
 				Token variableName = new Token();
 				TokenStream newLine = new TokenStream();
@@ -69,7 +70,8 @@ public class InstructionsScanner implements Scanner {
 				    temp = variableName.getStr() + " = " + variableName.getStr() + " + 1";
 				    newLine.setStream(this.tokenizer.tokenize(temp).getStream());
 					rawStream.set(i, variableName);
-				    this.instructionSet.add(idx, newLine);
+				    this.instructionSet.add(counter, newLine);
+				    counter++; // for some extreme corner cases where we have post-increment and pre-increment in the same instruction.
 				    break;
 				default: 
 					// post increment case
@@ -77,7 +79,7 @@ public class InstructionsScanner implements Scanner {
 				    temp = variableName.getStr() + " = " + variableName.getStr() + " + 1";
 				    newLine.setStream(this.tokenizer.tokenize(temp).getStream());
 					rawStream.set(i, variableName);
-				    this.instructionSet.add(idx+1, newLine);
+					this.instructionSet.add(counter+1, newLine);
 				    break;
 				}
 			} 

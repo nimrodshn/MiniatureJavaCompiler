@@ -9,6 +9,8 @@ public class TokenStream {
 		this.stream = stream;
 	}
 	
+	// Getters & Setters
+	
 	public ArrayList<Token> getStream() {
 		return stream;
 	}

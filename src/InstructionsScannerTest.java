@@ -34,12 +34,33 @@ public class InstructionsScannerTest {
 		String[][] expected2 = {
 				{"i","=","1"}, 
 				{"j","=","j","+","i"}, 
-				{"x" ,"=","j","+","7"}
+				{"x","=","j","+","7"}
 		};
 		ArrayList<TokenStream> scanned2 = scanner.scan(str2);
 		for (int i=0;i<scanned2.size();i++){
 			String[] got = scanned2.get(i).tokenStreamToStringArray();
 			String[] ex = expected2[i];
+			assertArrayEquals(got,ex);
+		}
+		
+		// Test 3
+		String str3 = "i = 1\nj = i + 5\nx = j++ + i++ + m++\nm = ++j * i++\n";
+		String[][] expected3 = {
+				{"i","=","1"}, 
+				{"j","=","i","+","5"},
+				{"x","=","j","+","i","+","m"},
+				{"m","=","m","+","1"},
+				{"i","=","i","+","1"},
+				{"j","=","j","+","1"},
+				{"j","=","j","+","1"},
+				{"m","=","j","*","i"},
+				{"i","=","i","+","1"}
+				
+		};
+		ArrayList<TokenStream> scanned3 = scanner.scan(str3);
+		for (int i=0;i<scanned3.size();i++){
+			String[] got = scanned3.get(i).tokenStreamToStringArray();
+			String[] ex = expected3[i];
 			assertArrayEquals(got,ex);
 		}
 	}
