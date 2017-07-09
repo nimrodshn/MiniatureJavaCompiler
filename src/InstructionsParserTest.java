@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-public class InstruictionsParserTest {
+public class InstructionsParserTest {
 	InstructionsScanner scanner = new InstructionsScanner();
 	InstructionsParser parser = new InstructionsParser();
 	@Test
