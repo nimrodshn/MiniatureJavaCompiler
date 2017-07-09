@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class InstructionsSemanticAnalyzerTest {
 	@Test
 	public void InstructionsSemanticAnalyzerTest() {
 		// Test 1
-		String str1 = "i = 0\nj = ++i\nx = i++ + 5\ny = 5 + 3 * 10\ni += y\n";
+		ArrayList<String> str1 = new ArrayList<>(Arrays.asList("i = 0", "j = ++i","x = i++ + 5","y = 5 + 3 * 10","i += y"));
 		HashMap<String,Integer> expected1 = new HashMap<String,Integer>();
 		expected1.put("i", 37);
 		expected1.put("x", 6);
@@ -23,11 +24,10 @@ public class InstructionsSemanticAnalyzerTest {
 
 		HashMap<String,Integer> results1 = analyzer.analyze(parsed1);
 		
-		//analyzer.printVarResults();
 		assertTrue(expected1.equals(results1));
 		
 		// Test 1
-		String str2 = "i = 1\nj = i + 5\nm = 0\nx = j++ + i++ + m++\nm = ++j * i++\n";
+		ArrayList<String> str2 = new ArrayList<>(Arrays.asList("i = 1","j = i + 5","x = j++ + i++ + m++","m = ++j * i++"));
 		HashMap<String,Integer> expected2 = new HashMap<String,Integer>();
 		expected2.put("i", 3);
 		expected2.put("x", 7);
@@ -38,7 +38,6 @@ public class InstructionsSemanticAnalyzerTest {
 
 		HashMap<String,Integer> results2 = analyzer.analyze(parsed2);
 		
-		//analyzer.printVarResults();
 		assertTrue(expected2.equals(results2));
 	}
 	

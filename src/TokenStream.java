@@ -31,6 +31,9 @@ public class TokenStream {
 		return this.stream.get(idx);
 	}
 	
+	/*
+	 * Description: output the token stream to a string array - for Debugging purposes.
+	 */
 	public String[] tokenStreamToStringArray(){
 		String[] res = new String[getStreamSize()];
 		for (int i=0;i<getStreamSize();i++){

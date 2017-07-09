@@ -36,13 +36,13 @@ public class InstructionsParser implements Parser {
 		    int counter = 2;
 		    while (counter < stream.getStreamSize()){
 		    	// current token is a variable or a number.
-		    	if (stream.getToken(counter).getStr() != "+" && stream.getToken(counter).getStr() != "-" && stream.getToken(counter).getStr() != "*" && stream.getToken(counter).getStr() != "/"){
+		    	if (!stream.getToken(counter).getStr().equals("+") && !stream.getToken(counter).getStr().equals("-") && !stream.getToken(counter).getStr().equals("*") && !stream.getToken(counter).getStr().equals("/")){
 		    		stack.push(new ASTNode(stream.getToken(counter)));
 			    	counter++;
-		    	} else if (stream.getToken(counter).getStr() == "+" || stream.getToken(counter).getStr() == "-"){
+		    	} else if (stream.getToken(counter).getStr().equals("+") || stream.getToken(counter).getStr().equals("-")){
 		    		stack.push(new ASTNode(stream.getToken(counter)));
 		    		counter++;
-		    	} else if (stream.getToken(counter).getStr() == "*" || stream.getToken(counter).getStr() == "/"){
+		    	} else if (stream.getToken(counter).getStr().equals("*") || stream.getToken(counter).getStr().equals("/")){
 		    		ASTNode operator = new ASTNode(stream.getToken(counter));
 		    		counter++;
 	    			ASTNode operand = stack.pop();

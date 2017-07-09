@@ -9,14 +9,9 @@ public class InstructionsScanner implements Scanner {
 		this.tokenizer = new InstructionTokenizer();
 	}
 	
-	/*
-	 * Description: This method receives a series of instructions in the form of one "raw string" and outputs
-	 * an array containing the the above instructions broken into streams of tokens.
-	 * @Param: String a set of instructions.
-	 */
-	public ArrayList<TokenStream> scan(String str) {
+	public ArrayList<TokenStream> scan(ArrayList<String> str) {
 		this.instructionSet = new ArrayList<TokenStream>();
-		String[] instructionLines = str.split("\n"); 	// Split line by null terminator character.
+		ArrayList<String> instructionLines = str; 
 		// Initially, create a raw token stream, from the original lines.
 		for (String line : instructionLines){
 			TokenStream rawTokenStream = this.tokenizer.tokenize(line);
@@ -28,11 +23,10 @@ public class InstructionsScanner implements Scanner {
 	
 	/*
 	 *  Description: Find 'Syntactic Sugar' in the whole instruction set on modify it according to java semantics.
-	 *  i.e iterate over the token stream representing each line and catch the syntactic modifying the instruction set where needed.
+	 *  i.e iterate over the token stream representing each line and catch the syntactic sugar and the modify the instruction set where needed.
 	 *  @Param: Array list of TokenStream each representing a line.
 	 */
 	private void cleanSyntacticSuger(ArrayList<TokenStream> instructionSet){
-		ArrayList<Token> res = new ArrayList<Token>();
 		for (int i=0;i<instructionSet.size();i++){
 			catchAndReplaceSyntacticSuger(instructionSet.get(i), i);
 		}
@@ -46,7 +40,6 @@ public class InstructionsScanner implements Scanner {
 	private void catchAndReplaceSyntacticSuger(TokenStream stream,int idx){
 		int counter = idx;
 		ArrayList<Token> rawStream = stream.getStream();
-		ArrayList<Token> modifiedStream = new ArrayList<Token>();
 		for (int i=0;i<rawStream.size();i++){
 			String tokenString = rawStream.get(i).getStr();
 			if (tokenString.contains("+=")){

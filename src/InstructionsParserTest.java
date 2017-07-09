@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -10,7 +11,7 @@ public class InstructionsParserTest {
 	@Test
 	public void InstructionsParserTest() {
 		// Test 1
-		String str1 = "i = 0\nj = ++i\nx = i++ + 5\ny = 5 + 3 * 10\ni += y\n";
+		ArrayList<String> str1 = new ArrayList<>(Arrays.asList("i = 0", "j = ++i","x = i++ + 5","y = 5 + 3 * 10","i += y"));
 		String[][] expected1 = {
 				{"i","=","0"},
 				{"i","=","i","+","1"},
@@ -32,7 +33,7 @@ public class InstructionsParserTest {
 		}
 		
 		// Test 2
-		String str2 = "i = 1\nj = i + 5\nx = j++ + i++ + m++\nm = ++j * i++\n";
+		ArrayList<String> str2 = new ArrayList<>(Arrays.asList("i = 1","j = i + 5","x = j++ + i++ + m++","m = ++j * i++"));
 		String[][] expected2 = {
 				{"i","=","1"}, 
 				{"j","=","i","+","5"},

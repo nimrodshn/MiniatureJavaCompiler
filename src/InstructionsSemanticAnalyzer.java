@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 public class InstructionsSemanticAnalyzer implements SemanticAnalyzer {
 	HashMap<String,Integer> varResults;  
@@ -66,12 +64,7 @@ public class InstructionsSemanticAnalyzer implements SemanticAnalyzer {
 	 * Description: Prints the Hashmap varResults or Debugging purposes.
 	 */
 	public void printVarResults(){
-		Iterator<Entry<String, Integer>> it = varResults.entrySet().iterator();
-	    while (it.hasNext()) {
-	        HashMap.Entry<String, Integer> pair = (HashMap.Entry<String, Integer>)it.next();
-	        System.out.println(pair.getKey() + " : " + pair.getValue());
-	        it.remove();
-	    }
+		System.out.print(varResults.toString());
 	}
 	
 	/*

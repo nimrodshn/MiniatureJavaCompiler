@@ -12,7 +12,7 @@ public class InstructionsScannerTest {
 	@Test
 	public void testScanner() {
 		// Test 1
-		String str1 = "i = 0\nj = ++i\nx = i++ + 5\ny = 5 + 3 * 10\ni += y\n";
+		ArrayList<String> str1 = new ArrayList<>(Arrays.asList("i = 0", "j = ++i","x = i++ + 5","y = 5 + 3 * 10","i += y"));
 		String[][] expected1 = {
 				{"i","=","0"},
 				{"i","=","i","+","1"},
@@ -30,7 +30,7 @@ public class InstructionsScannerTest {
 		}
 		
 		// Test 2
-		String str2 = "i = 1\nj += i\nx = j + 7\n";
+		ArrayList<String> str2 = new ArrayList<>(Arrays.asList("i = 1", "j += i","x = j + 7"));
 		String[][] expected2 = {
 				{"i","=","1"}, 
 				{"j","=","j","+","i"}, 
@@ -44,7 +44,7 @@ public class InstructionsScannerTest {
 		}
 		
 		// Test 3
-		String str3 = "i = 1\nj = i + 5\nx = j++ + i++ + m++\nm = ++j * i++\n";
+		ArrayList<String> str3 = new ArrayList<>(Arrays.asList("i = 1", "j = i + 5","x = j++ + i++ + m++","m = ++j * i++"));
 		String[][] expected3 = {
 				{"i","=","1"}, 
 				{"j","=","i","+","5"},
