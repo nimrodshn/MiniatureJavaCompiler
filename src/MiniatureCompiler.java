@@ -21,16 +21,16 @@ public class MiniatureCompiler implements Compiler {
 	 * @Param: A series of instructions in the form of an array of strings and outputs the correct assignments to each variable at the end of these instructions. 
 	 */
 	public void compile(ArrayList<String> str) {
-		ArrayList<TokenStream> scanned = scanner.scan(str);
-		ArrayList<AST> parsed = parser.parse(scanned);
-		analyzer.analyze(parsed);
+		ArrayList<TokenStream> scannedString = scanner.scan(str);
+		ArrayList<AST> ASTList = parser.parse(scannedString);
+		analyzer.analyze(ASTList);
 		analyzer.printVarResults();
 	}
 	
 	public static void main(String[] args) throws IOException {
 	    ArrayList<String> instructionLines = new ArrayList<String>();
 	    try {
-	        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(args[0])));         
+	        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("input.txt")));  // change here to args[0] if wish to compile and run from command line.   
 	        String line;
 	        while ((line = br.readLine()) != null) {
 	            instructionLines.add(line);
